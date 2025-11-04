@@ -1,0 +1,108 @@
+import { Request, Response } from "express"
+import Product from "../model/ProductModel"
+import { Types } from "mongoose"
+
+
+class productController {
+  static getAllProducts = async (req: Request, res: Response) => {
+    try {
+      const header = req.headers.authorization
+
+      if (!header) {
+        return res.status(401).json({ success: false, error: "unauthorized" })
+      }
+
+      const productList = await Product.find()
+      return res.json({ success: true, data: productList })
+    } catch (e) {
+      const error = e as Error
+      return res.status(500).json({ success: false, error: error.message })
+    }
+
+  }
+
+  static getProductById = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params
+      if (!Types.ObjectId.isValid(id)) return res.status(400).json({ success: false, error: "ID invalido" })
+
+      const findedProduct = await Product.findById(id)
+
+      if (!findedProduct) {
+        return res.status(404).json({ success: false, message: "producto no encontrado" })
+      }
+
+      return res.status(200).json({ success: true, data: findedProduct })
+    } catch (e) {
+      return res.status(400).json({ success: false, error: "error al obtener el producto o el ID ingresado es invalido" })
+    }
+  }
+
+  static addProduct = async (req: Request, res: Response) => {
+    try {
+      const { name, description, price, category, stock } = req.body
+
+      if (!name || !price || !stock) {
+        return res.status(400).json({ success: false, message: "datos invalidos, name, price y stock son requeridos" })
+      }
+
+      const existingProduct = await Product.findOne({ name })
+      if (existingProduct) {
+        return res.status(400).json({ success: false, message: "El producto ya existe" })
+      }
+
+      const newProduct = new Product({
+        name,
+        description,
+        price,
+        category,
+        stock
+      })
+
+      await newProduct.save()
+      return res.status(201).json({ success: true, data: newProduct })
+    } catch (e) {
+      return res.status(500).json({ success: false, error: "Error al crear el producto" })
+    }
+  }
+
+  static updateProduct = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params
+      const body = req.body
+
+      if (!Types.ObjectId.isValid(id)) return res.status(400).json({ success: false, error: "ID invalido" })
+
+      const updatedProduct = await Product.findByIdAndUpdate(id, body, { new: true })
+
+      if (!updatedProduct) {
+        return res.status(404).json({ success: false, message: "Producto no encontrado" })
+      }
+
+      return res.json({ success: true, data: updatedProduct })
+    } catch (e) {
+      return res.status(400).json({ success: false, error: "Error al actualizar el producto o el ID es inválido" })
+    }
+  }
+
+  static deleteProduct = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params
+
+      if (!Types.ObjectId.isValid(id)) return res.status(400).json({ success: false, error: "ID invalido" })
+
+      const deletedProduct = await Product.findByIdAndDelete(id)
+
+      if (!deletedProduct) {
+        return res.status(404).json({ success: false, message: "Producto no encontrado" })
+      }
+
+      return res.json({ success: true, data: deletedProduct })
+    } catch (e) {
+      return res.status(400).json({ success: false, error: "Error al borrar el producto o el ID es inválido" })
+    }
+  }
+
+}
+
+export default productController

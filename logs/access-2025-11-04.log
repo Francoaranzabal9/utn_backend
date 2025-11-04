@@ -1,0 +1,14 @@
+::1 GET / 404 38 - 3.374 ms
+::1 GET /favicon.ico 404 38 - 1.262 ms
+::1 GET / 200 15 - 1.551 ms
+::1 GET /products 401 49 - 2.974 ms
+::1 POST /auth/login 200 198 - 144.882 ms
+::1 GET /products 200 377 - 30.387 ms
+::1 GET /.well-known/appspecific/com.chrome.devtools.json 404 38 - 1.856 ms
+::1 POST /auth/register 409 56 - 102.860 ms
+::1 POST /auth/register 200 54 - 197.624 ms
+::1 POST /auth/register 409 56 - 104.152 ms
+::1 POST /auth/register 200 54 - 151.373 ms
+::1 POST /products 401 45 - 5.440 ms
+::1 POST /auth/login 200 198 - 112.755 ms
+::1 POST /products 201 188 - 103.556 ms

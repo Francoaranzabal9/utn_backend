@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "nombre": "Laptop HP Pavilion 15",
+    "categoria": "Tecnología",
+    "precio": 850,
+    "stock": 12,
+    "descripcion": "Notebook con procesador Intel i5, 8GB RAM y SSD 512GB."
+  },
+  {
+    "id": 3,
+    "nombre": "Cafetera Nespresso Essenza Mini",
+    "categoria": "Electrodomésticos",
+    "precio": 2123,
+    "stock": 22183798123,
+    "descripcion": "Cafetera compacta con sistema de cápsulas."
+  },
+  {
+    "id": 4,
+    "nombre": "Silla Gamer Redragon Saturn",
+    "categoria": "Muebles",
+    "precio": 210,
+    "stock": 15,
+    "descripcion": "Silla ergonómica reclinable con apoyabrazos 3D."
+  },
+  {
+    "id": 5,
+    "nombre": "Silla Gamer bomboclat Saturn",
+    "categoria": "Muebles",
+    "precio": 2213213618297,
+    "stock": 15,
+    "descripcion": "Silla ergonómica reclinable con apoyabrazos 3D."
+  }
+]
