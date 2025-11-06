@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import Product from "../model/ProductModel"
 import { Types } from "mongoose"
-
+import { productSchemaValidator, updateSchemaValidator } from "../validators/productsValidator"
 
 class productController {
   static getAllProducts = async (req: Request, res: Response) => {
@@ -42,8 +42,8 @@ class productController {
     try {
       const { name, description, price, category, stock } = req.body
 
-      if (!name || !price || !stock) {
-        return res.status(400).json({ success: false, message: "datos invalidos, name, price y stock son requeridos" })
+      if (!name || !price || !stock || !description || !category) {
+        return res.status(400).json({ success: false, message: "todos los campos son requeridos" })
       }
 
       const existingProduct = await Product.findOne({ name })
@@ -51,13 +51,13 @@ class productController {
         return res.status(400).json({ success: false, message: "El producto ya existe" })
       }
 
-      const newProduct = new Product({
-        name,
-        description,
-        price,
-        category,
-        stock
-      })
+      const validation = productSchemaValidator.safeParse(req.body)
+
+      if (!validation.success) {
+        return res.status(400).json({ success: false, error: validation.error })
+      }
+
+      const newProduct = new Product(validation.data)
 
       await newProduct.save()
       return res.status(201).json({ success: true, data: newProduct })
@@ -73,7 +73,13 @@ class productController {
 
       if (!Types.ObjectId.isValid(id)) return res.status(400).json({ success: false, error: "ID invalido" })
 
-      const updatedProduct = await Product.findByIdAndUpdate(id, body, { new: true })
+      const validation = updateSchemaValidator.safeParse(body)
+
+      const updatedProduct = await Product.findByIdAndUpdate(id, validation.data, { new: true })
+
+      if (!validation.success) {
+        return res.status(400).json({ success: false, error: validation.error })
+      }
 
       if (!updatedProduct) {
         return res.status(404).json({ success: false, message: "Producto no encontrado" })

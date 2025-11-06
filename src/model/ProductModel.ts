@@ -2,7 +2,6 @@ import { model, Model, Schema } from "mongoose"
 import IProduct from "../interfaces/IProduct"
 
 
-
 const productSchema = new Schema<IProduct>({
   name: { type: String, required: true, unique: true },
   description: { type: String, default: "No tiene descripcion" },
@@ -14,6 +13,8 @@ const productSchema = new Schema<IProduct>({
 })
 
 const Product: Model<IProduct> = model("Product", productSchema)
+
+
 
 
 export default Product

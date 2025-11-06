@@ -1,0 +1,16 @@
+::1 POST /auth/login 200 198 - 154.016 ms
+::1 POST /products 201 176 - 120.491 ms
+::1 POST /products 400 248 - 3.151 ms
+::1 POST /products 400 51 - 49.287 ms
+::1 POST /products 201 147 - 104.542 ms
+::1 POST /products 400 51 - 50.151 ms
+::1 POST /products 201 185 - 89.473 ms
+::1 POST /products 201 176 - 117.535 ms
+::1 POST /products 400 51 - 48.122 ms
+::1 DELETE /products/690d015b4d097bc5dba7efff 401 41 - 0.847 ms
+::1 POST /auth/login 200 198 - 126.926 ms
+::1 DELETE /products/690d015b4d097bc5dba7efff 200 176 - 55.648 ms
+::1 POST /products 201 176 - 132.892 ms
+::1 PATCH /products/690d023b9decf2ab1de4e1b3 200 173 - 81.555 ms
+::1 POST /products 500 54 - 63.348 ms
+::1 POST /products 201 176 - 147.637 ms

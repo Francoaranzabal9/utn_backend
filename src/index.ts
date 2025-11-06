@@ -20,10 +20,6 @@ declare global {
   }
 }
 
-//credenciales
-// const PORT = 2222
-
-
 const PORT = process.env.PORT
 
 //funcion que conecta la base de datos 
