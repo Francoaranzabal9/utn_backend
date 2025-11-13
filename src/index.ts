@@ -22,8 +22,6 @@ declare global {
 
 const PORT = process.env.PORT
 
-//funcion que conecta la base de datos 
-
 const app = express()
 
 //middlewares
@@ -39,7 +37,7 @@ app.get("/", (__, res) => {
 })
 
 app.use("/auth", limiter, authRoute)
-app.use("/products", authMiddleware, productRouter)
+app.use("/products", productRouter)
 
 
 app.use((__, res) => {
