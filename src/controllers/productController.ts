@@ -6,11 +6,11 @@ import { productSchemaValidator, updateSchemaValidator } from "../validators/pro
 class productController {
   static getAllProducts = async (req: Request, res: Response) => {
     try {
-      const header = req.headers.authorization
+      // const header = req.headers.authorization
 
-      if (!header) {
-        return res.status(401).json({ success: false, error: "unauthorized" })
-      }
+      // if (!header) {
+      //   return res.status(401).json({ success: false, error: "unauthorized" })
+      // }
 
       const productList = await Product.find()
       return res.json({ success: true, data: productList })
