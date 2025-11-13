@@ -7,7 +7,6 @@ import authRoute from "./routes/authRoutes"
 import morgan from "morgan"
 import logger from "./config/logger"
 import limiter from "./middleware/rateLimitMiddleware"
-import authMiddleware from "./middleware/authMiddleware"
 import dotenv from "dotenv"
 
 dotenv.config()
