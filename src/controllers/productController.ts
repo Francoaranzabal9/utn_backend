@@ -6,13 +6,25 @@ import { productSchemaValidator, updateSchemaValidator } from "../validators/pro
 class productController {
   static getAllProducts = async (req: Request, res: Response) => {
     try {
-      // const header = req.headers.authorization
 
-      // if (!header) {
-      //   return res.status(401).json({ success: false, error: "unauthorized" })
-      // }
+      const { name, stock, category, minPrice, maxPrice } = req.query
 
-      const productList = await Product.find()
+      const filter: any = {}
+
+      if (name) filter.name = new RegExp(String(name), "i")
+      if (stock) filter.stock = Number(stock)
+      if (category) filter.category = new RegExp(String(category), "i")
+      if (minPrice || maxPrice) {
+        filter.price = {}
+
+        if (minPrice) filter.price.$gte = minPrice
+
+        if (maxPrice) filter.price.$lte = maxPrice
+      }
+
+      console.log(filter)
+
+      const productList = await Product.find(filter)
       return res.json({ success: true, data: productList })
     } catch (e) {
       const error = e as Error

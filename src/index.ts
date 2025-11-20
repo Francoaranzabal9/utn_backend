@@ -36,6 +36,7 @@ app.get("/", (__, res) => {
 })
 
 app.use("/auth", limiter, authRoute)
+
 app.use("/products", productRouter)
 
 
