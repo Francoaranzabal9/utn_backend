@@ -53,6 +53,7 @@ app.post("/email/send", async (req, res) => {
     const info = await transporter.sendMail({
       from: `Tienda de software ${emailUser}`,
       to: process.env.EMAIL_USER,
+      replyTo: emailUser,
       subject,
       html: createTemplate(emailUser, message)
     })
