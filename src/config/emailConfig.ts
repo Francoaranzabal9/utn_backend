@@ -13,7 +13,11 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: USER,
     pass: PASS
-  }
+  },
+  connectionTimeout: 10000, // 10 seconds
+  socketTimeout: 10000, // 10 seconds
+  debug: true, // Enable debug output
+  logger: true // Log information to console
 })
 
 transporter.verify().then(() => {

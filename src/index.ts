@@ -62,6 +62,7 @@ app.post("/email/send", async (req, res) => {
 
   } catch (e) {
     const error = e as Error
+    console.error("Error enviando correo:", error)
     res.status(500).json({ success: false, error: error.message })
   }
 })
