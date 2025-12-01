@@ -41,7 +41,7 @@ class productController {
       const findedProduct = await Product.findById(id)
 
       if (!findedProduct) {
-        return res.status(404).json({ success: false, message: "producto no encontrado" })
+        return res.status(404).json({ success: false, error: "producto no encontrado" })
       }
 
       return res.status(200).json({ success: true, data: findedProduct })
@@ -55,12 +55,12 @@ class productController {
       const { name, description, price, category, stock } = req.body
 
       if (!name || !price || !stock || !description || !category) {
-        return res.status(400).json({ success: false, message: "todos los campos son requeridos" })
+        return res.status(400).json({ success: false, error: "todos los campos son requeridos" })
       }
 
       const existingProduct = await Product.findOne({ name })
       if (existingProduct) {
-        return res.status(400).json({ success: false, message: "El producto ya existe" })
+        return res.status(400).json({ success: false, error: "El producto ya existe" })
       }
 
       const validation = productSchemaValidator.safeParse(req.body)

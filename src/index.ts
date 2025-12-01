@@ -6,8 +6,11 @@ import productRouter from "./routes/productRoutes"
 import authRoute from "./routes/authRoutes"
 import morgan from "morgan"
 import logger from "./config/logger"
-import limiter from "./middleware/rateLimitMiddleware"
+// import limiter from "./middleware/rateLimitMiddleware"
 import dotenv from "dotenv"
+import transporter from "./config/emailConfig"
+import createTemplate from "./templates/emailTemplate"
+
 
 dotenv.config()
 
@@ -35,10 +38,32 @@ app.get("/", (__, res) => {
   res.json({ status: true })
 })
 
-app.use("/auth", limiter, authRoute)
+app.use("/auth", authRoute)
 
 app.use("/products", productRouter)
 
+app.post("/email/send", async (req, res) => {
+  const { email: emailUser, subject, message } = req.body
+
+  if (!subject || !emailUser || !message) {
+    return res.status(400).json({ success: false, error: "debes completar todos los campos" })
+  }
+
+  try {
+    const info = await transporter.sendMail({
+      from: `Tienda de software ${emailUser}`,
+      to: process.env.EMAIL_USER,
+      subject,
+      html: createTemplate(emailUser, message)
+    })
+
+    res.json({ success: true, message: "Correo enviado de forma exitosa", info })
+
+  } catch (e) {
+    const error = e as Error
+    res.status(500).json({ success: false, error: error.message })
+  }
+})
 
 app.use((__, res) => {
   res.status(404).json({ error: "El recurso no se encuentra" })

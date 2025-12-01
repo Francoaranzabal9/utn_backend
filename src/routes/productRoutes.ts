@@ -1,5 +1,6 @@
 import { Router } from "express"
 import productController from "../controllers/productController"
+import authMiddleware from "../middleware/authMiddleware"
 
 const productRouter = Router()
 
@@ -9,11 +10,11 @@ productRouter.get("/", productController.getAllProducts)
 
 productRouter.get("/:id", productController.getProductById)
 
-productRouter.post("/", productController.addProduct)
+productRouter.post("/", authMiddleware, productController.addProduct)
 
-productRouter.delete("/:id", productController.deleteProduct)
+productRouter.delete("/:id", authMiddleware, productController.deleteProduct)
 
-productRouter.patch("/:id", productController.updateProduct)
+productRouter.patch("/:id", authMiddleware, productController.updateProduct)
 
 
 
